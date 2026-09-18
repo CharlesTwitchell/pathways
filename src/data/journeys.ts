@@ -197,6 +197,153 @@ export const journeys: Journey[] = [
       },
     ],
   },
+  {
+    id: 'alameda-island-heritage',
+    title: 'Alameda Island Heritage',
+    theme: 'Naval History & Victorian Charm',
+    icon: '⚓',
+    accent: '#1d4e73',
+    description:
+      'From a WWII aircraft carrier to an Art Deco movie palace, wander the island city of Alameda — shaped by a Navy air station and lined with more Victorian buildings than almost anywhere else in California.',
+    duration: '~3 hours',
+    distance: '5 mi',
+    stops: [
+      {
+        id: 'uss-hornet',
+        name: 'USS Hornet Museum',
+        lat: 37.7714,
+        lng: -122.3011,
+        icon: '🛳️',
+        teaser:
+          'A WWII aircraft carrier that recovered the Apollo 11 astronauts, now docked at Alameda Point.',
+        story:
+          "Commissioned in 1943, USS Hornet earned nine battle stars in the Pacific and later served as the primary recovery ship for both the Apollo 11 and Apollo 12 splashdowns — the quarantine trailer that held Neil Armstrong, Buzz Aldrin, and Michael Collins is still aboard. Decommissioned in 1970, she's been a museum ship since 1998, moored at what was once Naval Air Station Alameda.",
+      },
+      {
+        id: 'alameda-point-hangars',
+        name: 'Alameda Point Hangars',
+        lat: 37.7862,
+        lng: -122.2934,
+        icon: '🛩️',
+        teaser: "Rows of WWII-era hangars from the Navy's busiest West Coast air station.",
+        story:
+          "Naval Air Station Alameda operated from 1940 until its 1997 closure, at its peak launching aircraft carriers and squadrons across the Pacific theater. Its enormous hangars and runways — some of the largest on the West Coast — now sit alongside breweries, film studios, and open space, a reminder of the base that once employed thousands of Alamedans.",
+      },
+      {
+        id: 'crolls-garden',
+        name: "Croll's Garden",
+        lat: 37.7770,
+        lng: -122.2895,
+        icon: '🥊',
+        teaser: 'An 1883 saloon and hotel where world champion boxers once trained.',
+        story:
+          "Built in 1883, Croll's began as a saloon and hotel before becoming a training camp for boxing champions in the early 1900s — Jack Dempsey and James J. Jeffries both trained in the ring upstairs before major fights. It's one of the oldest commercial buildings still standing on the island.",
+      },
+      {
+        id: 'alameda-theatre',
+        name: 'Alameda Theatre & Cineplex',
+        lat: 37.7652,
+        lng: -122.2422,
+        icon: '🎬',
+        teaser: 'A restored 1932 Art Deco movie palace on the main drag.',
+        story:
+          "Opened in 1932 at the height of the Art Deco era, the Alameda Theatre's terrazzo floors, neon marquee, and grand auditorium were restored and reopened in 2008 after decades of decline. It anchors Park Street's historic commercial district, itself lined with buildings dating to the 1890s.",
+      },
+      {
+        id: 'alameda-city-hall',
+        name: 'Alameda City Hall',
+        lat: 37.7649,
+        lng: -122.2418,
+        icon: '🏛️',
+        teaser: 'A Beaux-Arts city hall that has served continuously since 1896.',
+        story:
+          "Dedicated in 1896, Alameda's City Hall is one of the oldest continuously operating city halls in California. Its Beaux-Arts facade and clock tower have presided over Santa Clara Avenue for well over a century, surviving both the 1906 and 1989 earthquakes with only minor damage.",
+      },
+      {
+        id: 'crab-cove',
+        name: 'Crab Cove & Crown Memorial State Beach',
+        lat: 37.7676,
+        lng: -122.2789,
+        icon: '🦀',
+        teaser: "A sandy Bay beach and marine reserve at the island's southern edge.",
+        story:
+          "Once the site of Neptune Beach, a beloved amusement park nicknamed the 'Coney Island of the West' that operated from 1917 to 1939, Crab Cove is now a protected marine reserve. The visitor center's aquarium displays the bat rays, sharks, and crabs that give the cove its name.",
+      },
+    ],
+  },
+  {
+    id: 'oakland-lake-merritt',
+    title: 'Oakland: Lake Merritt Loop',
+    theme: 'Urban Nature & History',
+    icon: '🦢',
+    accent: '#b5622f',
+    description:
+      "Circle the country's oldest wildlife refuge in the heart of downtown Oakland, passing a Victorian mansion, a beloved children's park, and a movie palace with one of the Bay Area's most iconic signs.",
+    duration: '~2 hours',
+    distance: '3.4 mi',
+    stops: [
+      {
+        id: 'camron-stanford-house',
+        name: 'Camron-Stanford House',
+        lat: 37.8055,
+        lng: -122.2535,
+        icon: '🏠',
+        teaser: 'The last of the grand Victorian mansions that once ringed Lake Merritt.',
+        story:
+          'Built in 1876, the Camron-Stanford House is the sole survivor of a row of ornate Victorian mansions that once lined the west shore of Lake Merritt. It later served as the original home of the Oakland Museum before being restored as a house museum furnished in period style.',
+      },
+      {
+        id: 'childrens-fairyland',
+        name: "Children's Fairyland",
+        lat: 37.8064,
+        lng: -122.2563,
+        icon: '🎠',
+        teaser: "The country's first storybook theme park, and an inspiration for Disneyland.",
+        story:
+          "Opened in 1950 in Lakeside Park, Children's Fairyland predates Disneyland by five years and is widely credited as an inspiration for it — Walt Disney reportedly toured the park before designing his own. Its storybook sets and walk-through exhibits are still built to a child's scale.",
+      },
+      {
+        id: 'edoff-bandstand',
+        name: 'Edoff Memorial Bandstand',
+        lat: 37.8087,
+        lng: -122.2508,
+        icon: '🎶',
+        teaser: "A lakeside bandstand that's hosted free concerts since the 1930s.",
+        story:
+          'Built in 1938 with Works Progress Administration funding, the Edoff Memorial Bandstand sits at the edge of Lakeside Park and has hosted free public concerts for generations of Oakland residents, from big bands to community music series today.',
+      },
+      {
+        id: 'lake-merritt-wildlife-refuge',
+        name: 'Lake Merritt Wildlife Refuge',
+        lat: 37.8083,
+        lng: -122.2489,
+        icon: '🦆',
+        teaser: 'Declared a wildlife refuge in 1870 — the first in the United States.',
+        story:
+          "In 1870, Oakland's mayor persuaded the state legislature to designate Lake Merritt a wildlife refuge, making it the first official wildlife refuge in the United States. The tidal lagoon's small islands still shelter herons, egrets, and migratory waterfowl within sight of downtown high-rises.",
+      },
+      {
+        id: 'grand-lake-theatre',
+        name: 'Grand Lake Theatre',
+        lat: 37.8117,
+        lng: -122.2483,
+        icon: '🍿',
+        teaser: 'A 1926 movie palace famous for its rooftop marquee sign.',
+        story:
+          "Opened in 1926, the Grand Lake Theatre's towering illuminated marquee has been a Lake Merritt landmark for a century. Its sign has doubled as informal public art and protest space over the years, occasionally lit up with messages visible across the lake.",
+      },
+      {
+        id: 'morcom-rose-garden',
+        name: 'Morcom Rose Garden',
+        lat: 37.8149,
+        lng: -122.2537,
+        icon: '🌹',
+        teaser: 'A Depression-era terraced garden with thousands of rose bushes.',
+        story:
+          "Built by WPA workers between 1933 and 1937, the Morcom Amphitheatre of Roses terraces up a small canyon a few blocks north of the lake, planted with more than 4,000 rose bushes across 250 varieties. It's a quiet, fragrant detour from the lake's busier paths.",
+      },
+    ],
+  },
 ];
 
 export function getJourney(id: string): Journey | undefined {
