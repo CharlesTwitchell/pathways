@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { DirectionsButtons, DirectionsIconButton } from '../components/DirectionsLinks';
 import { getJourney } from '../data/journeys';
 import { useGeolocation } from '../hooks/useGeolocation';
 import { useProgress } from '../hooks/useProgress';
@@ -59,6 +60,8 @@ export function StopDetail() {
         <h1>{stop.name}</h1>
         <p className="teaser">{stop.teaser}</p>
 
+        <DirectionsButtons stop={stop} />
+
         {unlocked ? (
           <div className="story-content">
             <div className="unlocked-tag">✓ Unlocked</div>
@@ -94,7 +97,7 @@ export function StopDetail() {
                 {nextStop.icon} {nextStop.name}
               </div>
             </div>
-            <div>→</div>
+            <DirectionsIconButton stop={nextStop} />
           </Link>
         ) : (
           <Link to={`/journey/${journey.id}`} className="next-stop-nav">

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { DirectionsIconButton } from '../components/DirectionsLinks';
 import { JourneyMap } from '../components/JourneyMap';
 import { getJourney } from '../data/journeys';
 import { useGeolocation } from '../hooks/useGeolocation';
@@ -86,6 +87,7 @@ export function JourneyDetail() {
                 <div className={`stop-status ${visited ? 'visited' : 'locked'}`}>
                   {visited ? 'Visited' : 'Locked'}
                 </div>
+                <DirectionsIconButton stop={stop} />
               </Link>
             );
           })}

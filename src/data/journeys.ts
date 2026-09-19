@@ -17,6 +17,7 @@ export const journeys: Journey[] = [
         name: 'Boston Common',
         lat: 42.3551,
         lng: -71.0657,
+        address: 'Tremont St, Boston, MA 02111',
         icon: '🌳',
         teaser: "America's oldest public park, and the starting point of the trail.",
         story:
@@ -27,6 +28,7 @@ export const journeys: Journey[] = [
         name: 'Massachusetts State House',
         lat: 42.3588,
         lng: -71.0637,
+        address: '24 Beacon St, Boston, MA 02133',
         icon: '🏛️',
         teaser: 'The gold-domed seat of Massachusetts government since 1798.',
         story:
@@ -37,6 +39,7 @@ export const journeys: Journey[] = [
         name: 'Park Street Church',
         lat: 42.3567,
         lng: -71.0624,
+        address: '1 Park St, Boston, MA 02108',
         icon: '⛪',
         teaser: 'A 217-foot steeple that dominated the Boston skyline for a century.',
         story:
@@ -47,6 +50,7 @@ export const journeys: Journey[] = [
         name: 'Granary Burying Ground',
         lat: 42.3572,
         lng: -71.0619,
+        address: '95 Tremont St, Boston, MA 02108',
         icon: '🪦',
         teaser: 'Final resting place of Paul Revere, Samuel Adams, and John Hancock.',
         story:
@@ -57,6 +61,7 @@ export const journeys: Journey[] = [
         name: "King's Chapel",
         lat: 42.3579,
         lng: -71.0603,
+        address: '58 Tremont St, Boston, MA 02108',
         icon: '⛪',
         teaser: "Boston's first Anglican church, built to a chorus of local protest.",
         story:
@@ -67,6 +72,7 @@ export const journeys: Journey[] = [
         name: 'Old South Meeting House',
         lat: 42.3567,
         lng: -71.0575,
+        address: '310 Washington St, Boston, MA 02108',
         icon: '🗣️',
         teaser: 'Where 5,000 colonists gathered before the Boston Tea Party.',
         story:
@@ -77,6 +83,7 @@ export const journeys: Journey[] = [
         name: 'Old State House',
         lat: 42.3588,
         lng: -71.0567,
+        address: '206 Washington St, Boston, MA 02109',
         icon: '🦁',
         teaser: 'Site of the Boston Massacre, right outside its front door.',
         story:
@@ -87,6 +94,7 @@ export const journeys: Journey[] = [
         name: 'Faneuil Hall',
         lat: 42.3600,
         lng: -71.0568,
+        address: '1 Faneuil Hall Square, Boston, MA 02109',
         icon: '🎙️',
         teaser: "The 'Cradle of Liberty,' still a public meeting hall today.",
         story:
@@ -97,6 +105,7 @@ export const journeys: Journey[] = [
         name: 'Paul Revere House',
         lat: 42.3635,
         lng: -71.0537,
+        address: '19 North Square, Boston, MA 02113',
         icon: '🐴',
         teaser: "The silversmith's home before his midnight ride.",
         story:
@@ -107,6 +116,7 @@ export const journeys: Journey[] = [
         name: 'Old North Church',
         lat: 42.3662,
         lng: -71.0544,
+        address: '193 Salem St, Boston, MA 02113',
         icon: '🕯️',
         teaser: "'One if by land, two if by sea' — the signal lanterns hung here.",
         story:
@@ -117,6 +127,7 @@ export const journeys: Journey[] = [
         name: 'Bunker Hill Monument',
         lat: 42.3763,
         lng: -71.0611,
+        address: 'Monument Square, Charlestown, MA 02129',
         icon: '🗼',
         teaser: 'A 221-foot granite obelisk marking the Revolution’s first major battle.',
         story:
@@ -140,6 +151,7 @@ export const journeys: Journey[] = [
         name: 'Conservatory of Flowers',
         lat: 37.7729,
         lng: -122.4604,
+        address: '100 John F Kennedy Dr, San Francisco, CA 94118',
         icon: '🌺',
         teaser: 'The oldest wood-framed greenhouse in North America.',
         story:
@@ -150,6 +162,7 @@ export const journeys: Journey[] = [
         name: 'de Young Museum',
         lat: 37.7715,
         lng: -122.4686,
+        address: '50 Hagiwara Tea Garden Dr, San Francisco, CA 94118',
         icon: '🖼️',
         teaser: 'A copper-clad art museum with a twisting observation tower.',
         story:
@@ -160,6 +173,7 @@ export const journeys: Journey[] = [
         name: 'California Academy of Sciences',
         lat: 37.7699,
         lng: -122.4661,
+        address: '55 Music Concourse Dr, San Francisco, CA 94118',
         icon: '🔬',
         teaser: 'An aquarium, planetarium, and rainforest under one living roof.',
         story:
@@ -170,6 +184,7 @@ export const journeys: Journey[] = [
         name: 'Japanese Tea Garden',
         lat: 37.7702,
         lng: -122.4700,
+        address: '75 Hagiwara Tea Garden Dr, San Francisco, CA 94118',
         icon: '🍵',
         teaser: "The oldest public Japanese garden in the US, dating to 1894.",
         story:
@@ -180,6 +195,7 @@ export const journeys: Journey[] = [
         name: 'Stow Lake',
         lat: 37.7690,
         lng: -122.4769,
+        address: '50 Stow Lake Dr, San Francisco, CA 94118',
         icon: '🚣',
         teaser: 'A ring-shaped lake circling an artificial island with a waterfall.',
         story:
@@ -190,6 +206,7 @@ export const journeys: Journey[] = [
         name: 'Dutch Windmill & Queen Wilhelmina Garden',
         lat: 37.7702,
         lng: -122.5107,
+        address: 'John F Kennedy Dr & Great Hwy, San Francisco, CA 94121',
         icon: '🌷',
         teaser: 'A full-size working windmill at the park’s Pacific-facing edge.',
         story:
@@ -213,6 +230,7 @@ export const journeys: Journey[] = [
         name: 'USS Hornet Museum',
         lat: 37.7714,
         lng: -122.3011,
+        address: '707 W Hornet Ave, Alameda, CA 94501',
         icon: '🛳️',
         teaser:
           'A WWII aircraft carrier that recovered the Apollo 11 astronauts, now docked at Alameda Point.',
@@ -224,6 +242,7 @@ export const journeys: Journey[] = [
         name: 'Alameda Point Hangars',
         lat: 37.7862,
         lng: -122.2934,
+        address: 'Alameda Point, Alameda, CA 94501',
         icon: '🛩️',
         teaser: "Rows of WWII-era hangars from the Navy's busiest West Coast air station.",
         story:
@@ -234,6 +253,7 @@ export const journeys: Journey[] = [
         name: "Croll's Garden",
         lat: 37.7770,
         lng: -122.2895,
+        address: 'Webster St & Central Ave, Alameda, CA 94501',
         icon: '🥊',
         teaser: 'An 1883 saloon and hotel where world champion boxers once trained.',
         story:
@@ -244,6 +264,7 @@ export const journeys: Journey[] = [
         name: 'Alameda Theatre & Cineplex',
         lat: 37.7652,
         lng: -122.2422,
+        address: '2317 Central Ave, Alameda, CA 94501',
         icon: '🎬',
         teaser: 'A restored 1932 Art Deco movie palace on the main drag.',
         story:
@@ -254,6 +275,7 @@ export const journeys: Journey[] = [
         name: 'Alameda City Hall',
         lat: 37.7649,
         lng: -122.2418,
+        address: '2263 Santa Clara Ave, Alameda, CA 94501',
         icon: '🏛️',
         teaser: 'A Beaux-Arts city hall that has served continuously since 1896.',
         story:
@@ -264,6 +286,7 @@ export const journeys: Journey[] = [
         name: 'Crab Cove & Crown Memorial State Beach',
         lat: 37.7676,
         lng: -122.2789,
+        address: '1252 McKay Ave, Alameda, CA 94501',
         icon: '🦀',
         teaser: "A sandy Bay beach and marine reserve at the island's southern edge.",
         story:
@@ -287,6 +310,7 @@ export const journeys: Journey[] = [
         name: 'Camron-Stanford House',
         lat: 37.8055,
         lng: -122.2535,
+        address: '1418 Lakeside Dr, Oakland, CA 94612',
         icon: '🏠',
         teaser: 'The last of the grand Victorian mansions that once ringed Lake Merritt.',
         story:
@@ -297,6 +321,7 @@ export const journeys: Journey[] = [
         name: "Children's Fairyland",
         lat: 37.8064,
         lng: -122.2563,
+        address: '699 Bellevue Ave, Oakland, CA 94610',
         icon: '🎠',
         teaser: "The country's first storybook theme park, and an inspiration for Disneyland.",
         story:
@@ -307,6 +332,7 @@ export const journeys: Journey[] = [
         name: 'Edoff Memorial Bandstand',
         lat: 37.8087,
         lng: -122.2508,
+        address: 'Lakeside Park, Oakland, CA 94610',
         icon: '🎶',
         teaser: "A lakeside bandstand that's hosted free concerts since the 1930s.",
         story:
@@ -317,6 +343,7 @@ export const journeys: Journey[] = [
         name: 'Lake Merritt Wildlife Refuge',
         lat: 37.8083,
         lng: -122.2489,
+        address: 'Lake Merritt, Oakland, CA 94610',
         icon: '🦆',
         teaser: 'Declared a wildlife refuge in 1870 — the first in the United States.',
         story:
@@ -327,6 +354,7 @@ export const journeys: Journey[] = [
         name: 'Grand Lake Theatre',
         lat: 37.8117,
         lng: -122.2483,
+        address: '3200 Grand Ave, Oakland, CA 94610',
         icon: '🍿',
         teaser: 'A 1926 movie palace famous for its rooftop marquee sign.',
         story:
@@ -337,6 +365,7 @@ export const journeys: Journey[] = [
         name: 'Morcom Rose Garden',
         lat: 37.8149,
         lng: -122.2537,
+        address: '700 Jean St, Oakland, CA 94610',
         icon: '🌹',
         teaser: 'A Depression-era terraced garden with thousands of rose bushes.',
         story:

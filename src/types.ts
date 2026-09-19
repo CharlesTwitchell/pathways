@@ -3,6 +3,7 @@ export interface Stop {
   name: string;
   lat: number;
   lng: number;
+  address?: string;
   icon: string;
   teaser: string;
   story: string;
