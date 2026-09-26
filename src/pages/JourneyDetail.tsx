@@ -2,22 +2,40 @@ import { useMemo } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { DirectionsIconButton } from '../components/DirectionsLinks';
 import { JourneyMap } from '../components/JourneyMap';
-import { getJourney } from '../data/journeys';
+import { useAuth } from '../hooks/authContext';
 import { useGeolocation } from '../hooks/useGeolocation';
+import { useJourney } from '../hooks/useJourneys';
 import { useProgress } from '../hooks/useProgress';
 import { distanceMeters, formatDistance } from '../utils/geo';
 
 export function JourneyDetail() {
-  const { journeyId = '' } = useParams();
+  const { journeySlug = '' } = useParams();
   const navigate = useNavigate();
-  const journey = getJourney(journeyId);
-  const { isUnlocked, unlockedCount } = useProgress(journeyId);
+  const { session } = useAuth();
+  const { journey, loading, error } = useJourney(journeySlug);
+  const { isUnlocked, unlockedCount } = useProgress(journey?.id ?? '', session?.user.id ?? null);
   const { position } = useGeolocation(true);
 
   const nextStop = useMemo(
     () => journey?.stops.find((s) => !isUnlocked(s.id)),
     [journey, isUnlocked],
   );
+
+  if (loading) {
+    return (
+      <main>
+        <p className="hint">Loading journey…</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main>
+        <div className="error-banner">Couldn't load this journey: {error}</div>
+      </main>
+    );
+  }
 
   if (!journey) return <Navigate to="/" replace />;
 
@@ -38,6 +56,11 @@ export function JourneyDetail() {
           <h1>{journey.title}</h1>
           <div className="subtitle">{journey.theme}</div>
         </div>
+        {session?.user.id === journey.createdBy && (
+          <Link to={`/journey/${journey.slug}/edit`} className="edit-journey-link">
+            Edit
+          </Link>
+        )}
       </div>
       <main>
         <JourneyMap stops={journey.stops} visitedIds={visitedIds} userPosition={position} />
@@ -70,15 +93,15 @@ export function JourneyDetail() {
         )}
 
         <div className="stop-list">
-          {journey.stops.map((stop, i) => {
+          {journey.stops.map((stop) => {
             const visited = isUnlocked(stop.id);
             return (
               <Link
                 key={stop.id}
-                to={`/journey/${journey.id}/stop/${stop.id}`}
+                to={`/journey/${journey.slug}/stop/${stop.position}`}
                 className={`stop-row${visited ? ' visited' : ''}`}
               >
-                <div className="stop-index">{i + 1}</div>
+                <div className="stop-index">{stop.position}</div>
                 <div className="stop-icon">{stop.icon}</div>
                 <div className="stop-row-text">
                   <h3>{stop.name}</h3>

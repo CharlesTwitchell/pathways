@@ -3,7 +3,7 @@ import type { Journey } from '../types';
 
 export function JourneyCard({ journey }: { journey: Journey }) {
   return (
-    <Link to={`/journey/${journey.id}`} className="journey-card">
+    <Link to={`/journey/${journey.slug}`} className="journey-card">
       <div
         className="journey-cover"
         style={{
