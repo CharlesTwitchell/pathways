@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/authContext';
 import { useJourneys } from '../hooks/useJourneys';
 import { supabase } from '../lib/supabase';
+import { computeBadges } from '../utils/badges';
+import { pluralize } from '../utils/format';
 
 interface ProgressRow {
   journey_id: string;
@@ -42,11 +44,34 @@ export function Profile() {
     };
   }, [session?.user.id]);
 
+  const userId = session?.user.id;
+  const myJourneys = journeys.filter((j) => j.createdBy === userId);
+
+  const badges = useMemo(() => {
+    const completedJourneyIds = new Set(
+      progressRows
+        .filter((row) => {
+          const journey = journeys.find((j) => j.id === row.journey_id);
+          if (!journey || journey.stops.length === 0) return false;
+          return Object.keys(row.unlocked_stops ?? {}).length >= journey.stops.length;
+        })
+        .map((row) => row.journey_id),
+    );
+    return computeBadges({
+      totalUnlockedStops: progressRows.reduce(
+        (sum, row) => sum + Object.keys(row.unlocked_stops ?? {}).length,
+        0,
+      ),
+      completedJourneyCount: completedJourneyIds.size,
+      createdJourneyCount: myJourneys.length,
+      allJourneysComplete: journeys.length > 0 && journeys.every((j) => completedJourneyIds.has(j.id)),
+    });
+  }, [progressRows, journeys, myJourneys.length]);
+
   if (authLoading) return null;
   if (!session) return <Navigate to="/" replace />;
 
   const loading = journeysLoading || progressLoading;
-  const myJourneys = journeys.filter((j) => j.createdBy === session.user.id);
 
   return (
     <>
@@ -83,6 +108,21 @@ export function Profile() {
         >
           Sign out
         </button>
+
+        {!loading && (
+          <>
+            <h2 className="section-heading">Badges</h2>
+            <div className="badge-grid">
+              {badges.map((badge) => (
+                <div key={badge.id} className={`badge${badge.earned ? ' earned' : ''}`}>
+                  <div className="badge-icon">{badge.earned ? badge.icon : '🔒'}</div>
+                  <div className="badge-name">{badge.name}</div>
+                  <div className="badge-description">{badge.description}</div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
 
         <h2 className="section-heading">Your pathways</h2>
         {loading && <p className="hint">Loading…</p>}
@@ -126,7 +166,7 @@ export function Profile() {
               <div className="stop-icon">{journey.icon}</div>
               <div className="stop-row-text">
                 <h3>{journey.title}</h3>
-                <p>{journey.stops.length} stops</p>
+                <p>{pluralize(journey.stops.length, 'stop')}</p>
               </div>
               <div className="stop-status locked">Edit</div>
             </Link>

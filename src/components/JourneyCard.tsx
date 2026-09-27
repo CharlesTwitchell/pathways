@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import type { Journey } from '../types';
+import { pluralize } from '../utils/format';
 
 export function JourneyCard({ journey }: { journey: Journey }) {
   return (
@@ -19,9 +20,7 @@ export function JourneyCard({ journey }: { journey: Journey }) {
         <div className="journey-meta">
           <span>⏱ {journey.duration}</span>
           <span>📍 {journey.distance}</span>
-          <span>
-            🚩 {journey.stops.length} {journey.stops.length === 1 ? 'stop' : 'stops'}
-          </span>
+          <span>🚩 {pluralize(journey.stops.length, 'stop')}</span>
         </div>
       </div>
     </Link>
