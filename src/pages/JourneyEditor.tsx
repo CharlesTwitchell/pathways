@@ -12,16 +12,18 @@ import {
 } from '../hooks/useJourneys';
 import { uploadJourneyCoverImage, uploadStopImage } from '../lib/storage';
 
-interface StopDraft extends NewStopInput {
+interface StopDraft extends Omit<NewStopInput, 'lat' | 'lng'> {
   key: string;
+  lat: number | null;
+  lng: number | null;
 }
 
 function blankStop(): StopDraft {
   return {
     key: Math.random().toString(36).slice(2),
     name: '',
-    lat: 37.8,
-    lng: -122.3,
+    lat: null,
+    lng: null,
     address: '',
     icon: '📍',
     teaser: '',
@@ -118,13 +120,25 @@ export function JourneyEditor() {
     duration.trim() &&
     distance.trim() &&
     stops.length > 0 &&
-    stops.every((s) => s.name.trim() && s.teaser.trim() && s.story.trim() && s.icon.trim());
+    stops.every(
+      (s) => s.name.trim() && s.teaser.trim() && s.story.trim() && s.icon.trim() && s.lat != null && s.lng != null,
+    );
 
   async function handleSave() {
     if (!canSave || !session) return;
     setSaving(true);
     setSaveError(null);
-    const input = { title, theme, icon, accent, description, duration, distance, coverImageUrl, stops };
+    const input = {
+      title,
+      theme,
+      icon,
+      accent,
+      description,
+      duration,
+      distance,
+      coverImageUrl,
+      stops: stops.map((s) => ({ ...s, lat: s.lat as number, lng: s.lng as number })),
+    };
     try {
       if (isEditing && journey) {
         await updateJourney(journey.id, input);
@@ -253,6 +267,7 @@ export function JourneyEditor() {
               lat={stop.lat}
               lng={stop.lng}
               onChange={(lat, lng) => updateStop(stop.key, { lat, lng })}
+              onAddressFound={(address) => updateStop(stop.key, { address })}
             />
             <label className="field">
               <span>Address (optional)</span>

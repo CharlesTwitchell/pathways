@@ -778,6 +778,7 @@ main {
 
 .field-row .field {
   flex: 1;
+  min-width: 0;
 }
 
 .stop-editor-card {
@@ -856,6 +857,61 @@ main {
 .location-picker-map {
   height: 180px;
   margin-bottom: 0;
+}
+
+.location-search {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.location-search input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--text);
+}
+
+.secondary-button.location-search-button {
+  width: auto;
+  flex-shrink: 0;
+  margin-top: 0;
+  padding: 10px 16px;
+}
+
+.location-results {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.location-results li + li {
+  border-top: 1px solid var(--border);
+}
+
+.location-results button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  background: none;
+  border: none;
+  padding: 10px 12px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.location-results button:active {
+  background: var(--surface-muted);
 }
 
 .delete-button {
