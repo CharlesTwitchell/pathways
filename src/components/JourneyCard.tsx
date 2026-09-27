@@ -19,7 +19,9 @@ export function JourneyCard({ journey }: { journey: Journey }) {
         <div className="journey-meta">
           <span>⏱ {journey.duration}</span>
           <span>📍 {journey.distance}</span>
-          <span>🚩 {journey.stops.length} stops</span>
+          <span>
+            🚩 {journey.stops.length} {journey.stops.length === 1 ? 'stop' : 'stops'}
+          </span>
         </div>
       </div>
     </Link>
