@@ -47,6 +47,19 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
+-- Backfill: the trigger above only fires for NEW sign-ins from this point
+-- forward. Anyone who signed in before this trigger existed has an
+-- auth.users row with no matching profile - harmless until they try to
+-- create a journey, which then fails a foreign key check on created_by.
+-- Safe to re-run: on conflict do nothing skips anyone already backfilled.
+insert into public.profiles (id, display_name, avatar_url)
+select
+  id,
+  coalesce(raw_user_meta_data ->> 'full_name', raw_user_meta_data ->> 'name'),
+  raw_user_meta_data ->> 'avatar_url'
+from auth.users
+on conflict (id) do nothing;
+
 -- ---------------------------------------------------------------------------
 -- journeys: a themed set of stops. created_by = null means official/seed
 -- content (not editable through the app by anyone, only ever seeded here).
