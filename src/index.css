@@ -405,6 +405,8 @@ main {
   align-items: center;
   justify-content: center;
   font-size: 48px;
+  background-size: cover;
+  background-position: center;
 }
 
 .journey-card-body {
@@ -603,6 +605,8 @@ main {
   font-size: 56px;
   margin-bottom: 16px;
   box-shadow: var(--shadow);
+  background-size: cover;
+  background-position: center;
 }
 
 .stop-detail h1 {
@@ -812,6 +816,41 @@ main {
 .stop-editor-controls button:disabled {
   opacity: 0.4;
   cursor: default;
+}
+
+.image-upload-dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--surface-muted);
+}
+
+.image-upload-preview {
+  position: relative;
+  height: 140px;
+  border-radius: var(--radius-md);
+  background-size: cover;
+  background-position: center;
+}
+
+.image-remove-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  cursor: pointer;
 }
 
 .location-picker-map {

@@ -7,11 +7,15 @@ export function JourneyCard({ journey }: { journey: Journey }) {
     <Link to={`/journey/${journey.slug}`} className="journey-card">
       <div
         className="journey-cover"
-        style={{
-          background: `linear-gradient(135deg, ${journey.accent}, color-mix(in srgb, ${journey.accent} 60%, black))`,
-        }}
+        style={
+          journey.coverImageUrl
+            ? { backgroundImage: `url(${journey.coverImageUrl})` }
+            : {
+                background: `linear-gradient(135deg, ${journey.accent}, color-mix(in srgb, ${journey.accent} 60%, black))`,
+              }
+        }
       >
-        {journey.icon}
+        {!journey.coverImageUrl && journey.icon}
       </div>
       <div className="journey-card-body">
         <span className="journey-theme">{journey.theme}</span>

@@ -13,6 +13,7 @@ interface StopRow {
   teaser: string;
   story: string;
   radius_meters: number;
+  image_url: string | null;
 }
 
 interface JourneyRow {
@@ -26,6 +27,7 @@ interface JourneyRow {
   duration: string;
   distance: string;
   created_by: string | null;
+  cover_image_url: string | null;
   stops: StopRow[];
 }
 
@@ -41,6 +43,7 @@ function mapStop(row: StopRow): Stop {
     teaser: row.teaser,
     story: row.story,
     radiusMeters: row.radius_meters,
+    imageUrl: row.image_url ?? undefined,
   };
 }
 
@@ -56,6 +59,7 @@ function mapJourney(row: JourneyRow): Journey {
     duration: row.duration,
     distance: row.distance,
     createdBy: row.created_by,
+    coverImageUrl: row.cover_image_url ?? undefined,
     stops: [...row.stops].sort((a, b) => a.position - b.position).map(mapStop),
   };
 }
@@ -145,6 +149,7 @@ export interface NewStopInput {
   teaser: string;
   story: string;
   radiusMeters?: number;
+  imageUrl?: string;
 }
 
 export interface NewJourneyInput {
@@ -155,6 +160,7 @@ export interface NewJourneyInput {
   description: string;
   duration: string;
   distance: string;
+  coverImageUrl?: string;
   stops: NewStopInput[];
 }
 
@@ -164,6 +170,22 @@ function slugify(title: string): string {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   return `${base}-${Math.random().toString(36).slice(2, 7)}`;
+}
+
+function toStopRows(journeyId: string, stops: NewStopInput[]) {
+  return stops.map((stop, i) => ({
+    journey_id: journeyId,
+    position: i + 1,
+    name: stop.name,
+    lat: stop.lat,
+    lng: stop.lng,
+    address: stop.address || null,
+    icon: stop.icon,
+    teaser: stop.teaser,
+    story: stop.story,
+    radius_meters: stop.radiusMeters ?? 75,
+    image_url: stop.imageUrl || null,
+  }));
 }
 
 export async function createJourney(input: NewJourneyInput, userId: string): Promise<string> {
@@ -179,6 +201,7 @@ export async function createJourney(input: NewJourneyInput, userId: string): Pro
       description: input.description,
       duration: input.duration,
       distance: input.distance,
+      cover_image_url: input.coverImageUrl || null,
       created_by: userId,
     })
     .select('id')
@@ -186,20 +209,7 @@ export async function createJourney(input: NewJourneyInput, userId: string): Pro
 
   if (journeyError) throw new Error(journeyError.message);
 
-  const stopRows = input.stops.map((stop, i) => ({
-    journey_id: journeyRow.id,
-    position: i + 1,
-    name: stop.name,
-    lat: stop.lat,
-    lng: stop.lng,
-    address: stop.address || null,
-    icon: stop.icon,
-    teaser: stop.teaser,
-    story: stop.story,
-    radius_meters: stop.radiusMeters ?? 75,
-  }));
-
-  const { error: stopsError } = await supabase.from('stops').insert(stopRows);
+  const { error: stopsError } = await supabase.from('stops').insert(toStopRows(journeyRow.id, input.stops));
   if (stopsError) throw new Error(stopsError.message);
 
   return slug;
@@ -216,6 +226,7 @@ export async function updateJourney(journeyId: string, input: NewJourneyInput): 
       description: input.description,
       duration: input.duration,
       distance: input.distance,
+      cover_image_url: input.coverImageUrl || null,
     })
     .eq('id', journeyId);
   if (journeyError) throw new Error(journeyError.message);
@@ -223,20 +234,7 @@ export async function updateJourney(journeyId: string, input: NewJourneyInput): 
   const { error: deleteError } = await supabase.from('stops').delete().eq('journey_id', journeyId);
   if (deleteError) throw new Error(deleteError.message);
 
-  const stopRows = input.stops.map((stop, i) => ({
-    journey_id: journeyId,
-    position: i + 1,
-    name: stop.name,
-    lat: stop.lat,
-    lng: stop.lng,
-    address: stop.address || null,
-    icon: stop.icon,
-    teaser: stop.teaser,
-    story: stop.story,
-    radius_meters: stop.radiusMeters ?? 75,
-  }));
-
-  const { error: stopsError } = await supabase.from('stops').insert(stopRows);
+  const { error: stopsError } = await supabase.from('stops').insert(toStopRows(journeyId, input.stops));
   if (stopsError) throw new Error(stopsError.message);
 }
 

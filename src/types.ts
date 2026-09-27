@@ -9,6 +9,7 @@ export interface Stop {
   teaser: string;
   story: string;
   radiusMeters: number;
+  imageUrl?: string;
 }
 
 export interface Journey {
@@ -22,5 +23,6 @@ export interface Journey {
   duration: string;
   distance: string;
   createdBy: string | null;
+  coverImageUrl?: string;
   stops: Stop[];
 }

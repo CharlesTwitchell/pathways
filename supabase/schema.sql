@@ -172,3 +172,77 @@ drop policy if exists "Users can update their own progress" on public.journey_pr
 create policy "Users can update their own progress"
   on public.journey_progress for update
   using (auth.uid() = user_id);
+
+-- ---------------------------------------------------------------------------
+-- Images: a journey cover photo, a photo per stop, and (for photo check-ins)
+-- storage for photos taken on arrival. One public bucket covers all three -
+-- paths are namespaced by use (journeys/, stops/, checkins/) but the bucket
+-- and its policies don't need to know the difference.
+-- ---------------------------------------------------------------------------
+alter table public.journeys add column if not exists cover_image_url text;
+alter table public.stops add column if not exists image_url text;
+
+insert into storage.buckets (id, name, public)
+values ('journey-images', 'journey-images', true)
+on conflict (id) do nothing;
+
+-- Journey cover / stop photos live under journeys/ and stops/ and are public,
+-- same as the journey content they illustrate. Check-in photos live under
+-- checkins/ and are a personal photo journal - private to whoever took them.
+drop policy if exists "journey-images are publicly readable" on storage.objects;
+create policy "journey-images are publicly readable"
+  on storage.objects for select
+  using (bucket_id = 'journey-images' and (storage.foldername(name))[1] <> 'checkins');
+
+drop policy if exists "Check-in photos are private to their owner" on storage.objects;
+create policy "Check-in photos are private to their owner"
+  on storage.objects for select
+  using (
+    bucket_id = 'journey-images'
+    and (storage.foldername(name))[1] = 'checkins'
+    and owner = auth.uid()
+  );
+
+drop policy if exists "Signed-in users can upload journey-images" on storage.objects;
+create policy "Signed-in users can upload journey-images"
+  on storage.objects for insert
+  with check (bucket_id = 'journey-images' and auth.role() = 'authenticated');
+
+drop policy if exists "Owners can update their journey-images" on storage.objects;
+create policy "Owners can update their journey-images"
+  on storage.objects for update
+  using (bucket_id = 'journey-images' and owner = auth.uid());
+
+drop policy if exists "Owners can delete their journey-images" on storage.objects;
+create policy "Owners can delete their journey-images"
+  on storage.objects for delete
+  using (bucket_id = 'journey-images' and owner = auth.uid());
+
+-- ---------------------------------------------------------------------------
+-- Photo check-ins: an optional photo attached to unlocking a stop.
+-- ---------------------------------------------------------------------------
+create table if not exists public.checkin_photos (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references public.profiles (id) on delete cascade,
+  journey_id uuid not null references public.journeys (id) on delete cascade,
+  stop_id uuid not null references public.stops (id) on delete cascade,
+  photo_url text not null,
+  created_at timestamptz not null default now()
+);
+
+alter table public.checkin_photos enable row level security;
+
+drop policy if exists "Users can read their own check-in photos" on public.checkin_photos;
+create policy "Users can read their own check-in photos"
+  on public.checkin_photos for select
+  using (auth.uid() = user_id);
+
+drop policy if exists "Users can add their own check-in photos" on public.checkin_photos;
+create policy "Users can add their own check-in photos"
+  on public.checkin_photos for insert
+  with check (auth.uid() = user_id);
+
+drop policy if exists "Users can delete their own check-in photos" on public.checkin_photos;
+create policy "Users can delete their own check-in photos"
+  on public.checkin_photos for delete
+  using (auth.uid() = user_id);

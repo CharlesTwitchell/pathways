@@ -71,11 +71,15 @@ export function StopDetail() {
       <main className="stop-detail">
         <div
           className="stop-hero"
-          style={{
-            background: `linear-gradient(135deg, ${journey.accent}, color-mix(in srgb, ${journey.accent} 55%, black))`,
-          }}
+          style={
+            stop.imageUrl
+              ? { backgroundImage: `url(${stop.imageUrl})` }
+              : {
+                  background: `linear-gradient(135deg, ${journey.accent}, color-mix(in srgb, ${journey.accent} 55%, black))`,
+                }
+          }
         >
-          {stop.icon}
+          {!stop.imageUrl && stop.icon}
         </div>
         <h1>{stop.name}</h1>
         <p className="teaser">{stop.teaser}</p>

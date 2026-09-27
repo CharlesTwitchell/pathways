@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { ImageUploadField } from '../components/ImageUploadField';
 import { LocationPicker } from '../components/LocationPicker';
 import { useAuth } from '../hooks/authContext';
 import {
@@ -9,6 +10,7 @@ import {
   useJourney,
   type NewStopInput,
 } from '../hooks/useJourneys';
+import { uploadJourneyCoverImage, uploadStopImage } from '../lib/storage';
 
 interface StopDraft extends NewStopInput {
   key: string;
@@ -42,6 +44,7 @@ export function JourneyEditor() {
   const [description, setDescription] = useState('');
   const [duration, setDuration] = useState('');
   const [distance, setDistance] = useState('');
+  const [coverImageUrl, setCoverImageUrl] = useState<string | undefined>(undefined);
   const [stops, setStops] = useState<StopDraft[]>([blankStop()]);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -56,6 +59,7 @@ export function JourneyEditor() {
       setDescription(journey.description);
       setDuration(journey.duration);
       setDistance(journey.distance);
+      setCoverImageUrl(journey.coverImageUrl);
       setStops(
         journey.stops.map((s) => ({
           key: s.id,
@@ -67,6 +71,7 @@ export function JourneyEditor() {
           teaser: s.teaser,
           story: s.story,
           radiusMeters: s.radiusMeters,
+          imageUrl: s.imageUrl,
         })),
       );
       setHydrated(true);
@@ -119,7 +124,7 @@ export function JourneyEditor() {
     if (!canSave || !session) return;
     setSaving(true);
     setSaveError(null);
-    const input = { title, theme, icon, accent, description, duration, distance, stops };
+    const input = { title, theme, icon, accent, description, duration, distance, coverImageUrl, stops };
     try {
       if (isEditing && journey) {
         await updateJourney(journey.id, input);
@@ -200,6 +205,13 @@ export function JourneyEditor() {
           </label>
         </div>
 
+        <ImageUploadField
+          label="Cover photo (optional)"
+          value={coverImageUrl}
+          onChange={setCoverImageUrl}
+          uploadFn={uploadJourneyCoverImage}
+        />
+
         <h2 className="section-heading">Stops</h2>
         {stops.map((stop, i) => (
           <div key={stop.key} className="stop-editor-card">
@@ -231,6 +243,12 @@ export function JourneyEditor() {
               <span>Name</span>
               <input value={stop.name} onChange={(e) => updateStop(stop.key, { name: e.target.value })} />
             </label>
+            <ImageUploadField
+              label="Photo (optional)"
+              value={stop.imageUrl}
+              onChange={(url) => updateStop(stop.key, { imageUrl: url })}
+              uploadFn={uploadStopImage}
+            />
             <LocationPicker
               lat={stop.lat}
               lng={stop.lng}
