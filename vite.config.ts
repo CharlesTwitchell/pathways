@@ -35,6 +35,12 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
+        // Take over from any previously-installed service worker immediately
+        // instead of waiting for every open tab to close first, so a deploy
+        // shows up on the next reload rather than needing a full browser
+        // restart.
+        skipWaiting: true,
+        clientsClaim: true,
       },
     }),
   ],
