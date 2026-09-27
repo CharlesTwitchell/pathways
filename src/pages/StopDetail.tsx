@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { CheckinPhotos } from '../components/CheckinPhotos';
 import { DirectionsButtons, DirectionsIconButton } from '../components/DirectionsLinks';
 import { useAuth } from '../hooks/authContext';
 import { useGeolocation } from '../hooks/useGeolocation';
@@ -87,10 +88,13 @@ export function StopDetail() {
         <DirectionsButtons stop={stop} />
 
         {unlocked ? (
-          <div className="story-content">
-            <div className="unlocked-tag">✓ Unlocked</div>
-            {stop.story}
-          </div>
+          <>
+            <div className="story-content">
+              <div className="unlocked-tag">✓ Unlocked</div>
+              {stop.story}
+            </div>
+            {session && <CheckinPhotos userId={session.user.id} journeyId={journey.id} stopId={stop.id} />}
+          </>
         ) : (
           <div className="unlock-card">
             <div className="lock-icon">🔒</div>
