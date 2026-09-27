@@ -2,11 +2,13 @@ import { useMemo } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { DirectionsIconButton } from '../components/DirectionsLinks';
 import { JourneyMap } from '../components/JourneyMap';
+import { ShareButton } from '../components/ShareButton';
 import { useAuth } from '../hooks/authContext';
 import { useGeolocation } from '../hooks/useGeolocation';
 import { useJourney } from '../hooks/useJourneys';
 import { useProgress } from '../hooks/useProgress';
 import { distanceMeters, formatDistance } from '../utils/geo';
+import { pluralize } from '../utils/format';
 
 export function JourneyDetail() {
   const { journeySlug = '' } = useParams();
@@ -39,6 +41,7 @@ export function JourneyDetail() {
 
   if (!journey) return <Navigate to="/" replace />;
 
+  const journeyUrl = `${window.location.origin}${import.meta.env.BASE_URL}#/journey/${journey.slug}`;
   const visitedIds = new Set(journey.stops.filter((s) => isUnlocked(s.id)).map((s) => s.id));
   const percent = Math.round((unlockedCount / journey.stops.length) * 100);
   const distanceToNext =
@@ -56,11 +59,21 @@ export function JourneyDetail() {
           <h1>{journey.title}</h1>
           <div className="subtitle">{journey.theme}</div>
         </div>
-        {session?.user.id === journey.createdBy && (
-          <Link to={`/journey/${journey.slug}/edit`} className="edit-journey-link">
-            Edit
-          </Link>
-        )}
+        <div className="top-bar-actions">
+          <ShareButton
+            title={journey.title}
+            text={`Check out "${journey.title}" on Pathways`}
+            url={journeyUrl}
+            className="share-icon-button"
+          >
+            <span aria-hidden="true">↗</span>
+          </ShareButton>
+          {session?.user.id === journey.createdBy && (
+            <Link to={`/journey/${journey.slug}/edit`} className="edit-journey-link">
+              Edit
+            </Link>
+          )}
+        </div>
       </div>
       <main>
         <JourneyMap stops={journey.stops} visitedIds={visitedIds} userPosition={position} />
@@ -68,8 +81,8 @@ export function JourneyDetail() {
         <div className="progress-banner">
           <div>
             <div>
-              <span className="count">{unlockedCount}</span> / {journey.stops.length} stops
-              unlocked
+              <span className="count">{unlockedCount}</span> /{' '}
+              {pluralize(journey.stops.length, 'stop')} unlocked
             </div>
             {nextStop && (
               <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>
@@ -89,6 +102,14 @@ export function JourneyDetail() {
             <div className="big-icon">🎉</div>
             <h2>Journey complete</h2>
             <p>You've unlocked every stop on {journey.title}.</p>
+            <ShareButton
+              title={journey.title}
+              text={`I just completed "${journey.title}" on Pathways! 🎉`}
+              url={journeyUrl}
+              className="secondary-button"
+            >
+              Share your completion
+            </ShareButton>
           </div>
         )}
 

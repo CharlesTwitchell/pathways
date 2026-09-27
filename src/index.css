@@ -174,8 +174,15 @@ button {
   color: var(--text-muted);
 }
 
-.edit-journey-link {
+.top-bar-actions {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.edit-journey-link {
   font-size: 13px;
   font-weight: 600;
   color: var(--primary);
@@ -184,6 +191,39 @@ button {
   border-radius: 999px;
   background: var(--surface-muted);
   flex-shrink: 0;
+}
+
+.share-button-wrap {
+  display: block;
+  position: relative;
+}
+
+.share-icon-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-feedback {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  z-index: 20;
+  box-shadow: var(--shadow-lg);
 }
 
 main {
