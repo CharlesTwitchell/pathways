@@ -406,6 +406,36 @@ main {
   }
 }
 
+/* Above phone width there's room for more than one card at a time - let
+   them flow into a scattered masonry instead of a single rigid column. */
+@media (min-width: 640px) {
+  .journey-list {
+    display: block;
+    column-count: 2;
+    column-gap: 22px;
+    margin-top: 40px;
+  }
+
+  .journey-card {
+    display: inline-block;
+    width: 100%;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    margin: 0 0 22px;
+    transform: rotate(var(--scatter-rotate, 0deg)) translateY(var(--scatter-offset, 0px));
+  }
+
+  .journey-card:active {
+    transform: rotate(0deg) translateY(var(--scatter-offset, 0px)) scale(0.98);
+  }
+
+  @media (hover: hover) {
+    .journey-card:hover {
+      transform: rotate(0deg) translateY(calc(var(--scatter-offset, 0px) - 4px));
+    }
+  }
+}
+
 .journey-cover {
   position: relative;
   height: 190px;

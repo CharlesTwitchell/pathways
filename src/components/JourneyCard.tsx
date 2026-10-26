@@ -1,11 +1,18 @@
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import type { Journey } from '../types';
 import { pluralize } from '../utils/format';
+import { seededOffsetPx, seededRotationDeg } from '../utils/scatter';
 import { JourneyCoverFallback } from './JourneyCoverFallback';
 
 export function JourneyCard({ journey }: { journey: Journey }) {
+  const scatterStyle = {
+    '--scatter-rotate': `${seededRotationDeg(journey.id)}deg`,
+    '--scatter-offset': `${seededOffsetPx(journey.id)}px`,
+  } as CSSProperties;
+
   return (
-    <Link to={`/journey/${journey.slug}`} className="journey-card">
+    <Link to={`/journey/${journey.slug}`} className="journey-card" style={scatterStyle}>
       <div
         className="journey-cover"
         style={journey.coverImageUrl ? { backgroundImage: `url(${journey.coverImageUrl})` } : undefined}
